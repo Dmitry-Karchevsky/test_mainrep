@@ -86,6 +86,18 @@ public class TestService {
         }
     }
 
+    public List<TestsDataSet> getAllTests () throws Exception{
+        try {
+            Session session = sessionFactory.openSession();
+            TestsDAO dao = new TestsDAO(session);
+            List<TestsDataSet> tests = dao.getAllTests();
+            session.close();
+            return tests;
+        } catch (HibernateException e) {
+            throw new Exception(e);
+        }
+    }
+
     public TestsDataSet getTestById(int id) throws Exception{
         try {
             Session session = sessionFactory.openSession();
@@ -131,6 +143,17 @@ public class TestService {
             TestsDAO dao = new TestsDAO(session);
             dao.setSolution_Time(test_id, solution_time);
             transaction.commit();
+            session.close();
+        } catch (HibernateException e) {
+            throw new Exception(e);
+        }
+    }
+
+    public void removeTest(int test_id) throws Exception{
+        try {
+            Session session = sessionFactory.openSession();
+            TestsDataSet test = getTestById(test_id);
+            session.remove(test);
             session.close();
         } catch (HibernateException e) {
             throw new Exception(e);

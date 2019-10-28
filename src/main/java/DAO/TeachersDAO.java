@@ -55,6 +55,22 @@ public class TeachersDAO {
         return teachers;
     }
 
+    public List<TeachersDataSet> getAllTeachers() throws HibernateException {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<TeachersDataSet> cq = cb.createQuery(TeachersDataSet.class);
+        Root<TeachersDataSet> root = cq.from(TeachersDataSet.class);
+        cq.select(root);
+        List<TeachersDataSet> teachers;
+        Query<TeachersDataSet> query = session.createQuery(cq);
+        try{
+            teachers = query.getResultList();
+        }catch (NoResultException ex){
+            System.out.println("Преподавателей не существует");
+            return null;
+        }
+        return teachers;
+    }
+
     public List<TeachersDataSet> getTeachersByOrganization (String organization) throws HibernateException {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<TeachersDataSet> cq = cb.createQuery(TeachersDataSet.class);

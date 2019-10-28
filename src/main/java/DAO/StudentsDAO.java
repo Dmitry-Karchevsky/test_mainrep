@@ -92,6 +92,22 @@ public class StudentsDAO {
         return students;
     }
 
+    public List<StudentsDataSet> getAllStudents() throws HibernateException {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<StudentsDataSet> cq = cb.createQuery(StudentsDataSet.class);
+        Root<StudentsDataSet> root = cq.from(StudentsDataSet.class);
+        cq.select(root);
+        List<StudentsDataSet> students;
+        Query<StudentsDataSet> query = session.createQuery(cq);
+        try{
+            students = query.getResultList();
+        }catch (NoResultException ex){
+            System.out.println("Студентов не существует");
+            return null;
+        }
+        return students;
+    }
+
     public void setStudent_Organization(int student_id, String organization) throws HibernateException{
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaUpdate<StudentsDataSet> criteria = builder.createCriteriaUpdate(StudentsDataSet.class);

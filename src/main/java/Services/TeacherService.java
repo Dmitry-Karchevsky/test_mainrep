@@ -123,7 +123,19 @@ public class TeacherService implements UserService_Interface{
         }
     }
 
-    public void setStudent_Organization(int teacher_id, String organization) throws Exception{
+    public List<TeachersDataSet> getAllUsers () throws Exception{
+        try {
+            Session session = sessionFactory.openSession();
+            TeachersDAO dao = new TeachersDAO(session);
+            List<TeachersDataSet> teachers = dao.getAllTeachers();
+            session.close();
+            return teachers;
+        } catch (HibernateException e) {
+            throw new Exception(e);
+        }
+    }
+
+    public void setUser_Organization(int teacher_id, String organization) throws Exception{
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
@@ -136,13 +148,24 @@ public class TeacherService implements UserService_Interface{
         }
     }
 
-    public void setStudent_Patronymic(int teacher_id, String patronymic) throws Exception{
+    public void setUser_Patronymic(int teacher_id, String patronymic) throws Exception{
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             TeachersDAO dao = new TeachersDAO(session);
             dao.setTeacher_Patronymic(teacher_id, patronymic);
             transaction.commit();
+            session.close();
+        } catch (HibernateException e) {
+            throw new Exception(e);
+        }
+    }
+
+    public void removeUser(int teacher_id) throws Exception{
+        try {
+            Session session = sessionFactory.openSession();
+            TeachersDataSet test = getCurUserById(teacher_id);
+            session.remove(test);
             session.close();
         } catch (HibernateException e) {
             throw new Exception(e);

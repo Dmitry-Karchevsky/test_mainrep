@@ -30,7 +30,11 @@ public interface UserService_Interface {
 
     <T> List<T> getCurUserByFIO(String name, String surname, String patronymic) throws Exception;
 
-    void setStudent_Organization(int student_id, String organization) throws Exception;
+    void setUser_Organization(int user_id, String organization) throws Exception;
 
-    void setStudent_Patronymic(int student_id, String patronymic) throws Exception;
+    void setUser_Patronymic(int user_id, String patronymic) throws Exception;
+
+    void removeUser(int user_id) throws Exception;
+
+    <T> List<T> getAllUsers () throws Exception;
 }

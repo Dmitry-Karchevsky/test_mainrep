@@ -59,6 +59,22 @@ public class TestsDAO {
         return tests;
     }
 
+    public List<TestsDataSet> getAllTests() throws HibernateException {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<TestsDataSet> cq = cb.createQuery(TestsDataSet.class);
+        Root<TestsDataSet> root = cq.from(TestsDataSet.class);
+        cq.select(root);
+        List<TestsDataSet> tests;
+        Query<TestsDataSet> query = session.createQuery(cq);
+        try{
+            tests = query.getResultList();
+        }catch (NoResultException ex){
+            System.out.println("Тестов не существует");
+            return null;
+        }
+        return tests;
+    }
+
     public void setAbout_Test(int test_id, String about_test) throws HibernateException{
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaUpdate<TestsDataSet> criteria = builder.createCriteriaUpdate(TestsDataSet.class);
@@ -85,7 +101,6 @@ public class TestsDAO {
         criteria.set(root.get("solution_time"), solution_time);
         session.createQuery(criteria).executeUpdate();
     }
-
 
     public void insertTest(String name, String creation_time, boolean test_type) throws HibernateException {
         session.save(new TestsDataSet(name, creation_time, test_type));
