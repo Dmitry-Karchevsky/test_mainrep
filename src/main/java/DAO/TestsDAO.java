@@ -9,6 +9,7 @@ import org.hibernate.query.Query;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class TestsDAO {
         return tests;
     }
 
-    public List<TestsDataSet> getTestByName(String name) throws HibernateException {
+    public List<TestsDataSet> getTestsByName(String name) throws HibernateException {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<TestsDataSet> cq = cb.createQuery(TestsDataSet.class);
         Root<TestsDataSet> root = cq.from(TestsDataSet.class);
@@ -58,7 +59,35 @@ public class TestsDAO {
         return tests;
     }
 
-    public long insertTest(String name, String creation_time, boolean test_type) throws HibernateException {
-        return (Long) session.save(new TestsDataSet(name, creation_time, test_type));
+    public void setAbout_Test(int test_id, String about_test) throws HibernateException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaUpdate<TestsDataSet> criteria = builder.createCriteriaUpdate(TestsDataSet.class);
+        Root<TestsDataSet> root = criteria.from(TestsDataSet.class);
+        criteria.where(builder.equal(root.get("id"), test_id));
+        criteria.set(root.get("about_test"), about_test);
+        session.createQuery(criteria).executeUpdate();
+    }
+
+    public void setTests_Attempts(int test_id, int attempts) throws HibernateException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaUpdate<TestsDataSet> criteria = builder.createCriteriaUpdate(TestsDataSet.class);
+        Root<TestsDataSet> root = criteria.from(TestsDataSet.class);
+        criteria.where(builder.equal(root.get("id"), test_id));
+        criteria.set(root.get("attempts"), attempts);
+        session.createQuery(criteria).executeUpdate();
+    }
+
+    public void setSolution_Time(int test_id, int solution_time) throws HibernateException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaUpdate<TestsDataSet> criteria = builder.createCriteriaUpdate(TestsDataSet.class);
+        Root<TestsDataSet> root = criteria.from(TestsDataSet.class);
+        criteria.where(builder.equal(root.get("id"), test_id));
+        criteria.set(root.get("solution_time"), solution_time);
+        session.createQuery(criteria).executeUpdate();
+    }
+
+
+    public void insertTest(String name, String creation_time, boolean test_type) throws HibernateException {
+        session.save(new TestsDataSet(name, creation_time, test_type));
     }
 }

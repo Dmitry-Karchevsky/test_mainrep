@@ -1,10 +1,11 @@
 package DataSets;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table (name = "student")
+@Table (name = "Student")
 public class StudentsDataSet {
 
     @Id
@@ -33,23 +34,32 @@ public class StudentsDataSet {
     @Column(name = "organization", length = 50)
     private String organization;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "mark_student", joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "mark_id"))
-    private int mark_id;
+    private Set<MarksDataSet> mark_id = new HashSet<>();
 
-    @OneToOne(mappedBy = "student")
-    private int answer_id;
+    @OneToOne(mappedBy = "student_id")
+    private AnswersDataSet answer_id;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "test_student", joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "test_id"))
-    private int passedTests_id;
+    private Set<TestsDataSet> passedTests_id = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "students_groups", joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id"))
-    private int groups_id;
+    private Set<GroupsDataSet> groups_id = new HashSet<>();
 
     public StudentsDataSet(){
     }
@@ -144,35 +154,35 @@ public class StudentsDataSet {
                 '}';
     }
 
-    public int getPassedTests_id() {
-        return passedTests_id;
-    }
-
-    public void setPassedTests_id(int passedTests_id) {
-        this.passedTests_id = passedTests_id;
-    }
-
-    public int getGroups_id() {
-        return groups_id;
-    }
-
-    public void setGroups_id(int groups_id) {
-        this.groups_id = groups_id;
-    }
-
-    public int getMark_id() {
+    public Set<MarksDataSet> getMark_id() {
         return mark_id;
     }
 
-    public void setMark_id(int mark_id) {
+    public void setMark_id(Set<MarksDataSet> mark_id) {
         this.mark_id = mark_id;
     }
 
-    public int getAnswer_id() {
+    public Set<TestsDataSet> getPassedTests_id() {
+        return passedTests_id;
+    }
+
+    public void setPassedTests_id(Set<TestsDataSet> passedTests_id) {
+        this.passedTests_id = passedTests_id;
+    }
+
+    public Set<GroupsDataSet> getGroups_id() {
+        return groups_id;
+    }
+
+    public void setGroups_id(Set<GroupsDataSet> groups_id) {
+        this.groups_id = groups_id;
+    }
+
+    public AnswersDataSet getAnswer_id() {
         return answer_id;
     }
 
-    public void setAnswer_id(int answer_id) {
+    public void setAnswer_id(AnswersDataSet answer_id) {
         this.answer_id = answer_id;
     }
 }

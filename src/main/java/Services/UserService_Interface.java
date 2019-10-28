@@ -18,9 +18,19 @@ public interface UserService_Interface {
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
-    long addUser(String name, String surname, String email, String password, String regDate) throws Exception;
+    void addUser(String name, String surname, String email, String password, String regDate) throws Exception;
 
     <T> T getCurUserByLogin(String login) throws Exception;
 
+    <T> T getCurUserById(int id) throws Exception;
+
+    <T> List<T> getCurUserBySurname(String surname) throws Exception;
+
+    <T> List<T> getCurUserByOrganization(String organization) throws Exception;
+
     <T> List<T> getCurUserByFIO(String name, String surname, String patronymic) throws Exception;
+
+    void setStudent_Organization(int student_id, String organization) throws Exception;
+
+    void setStudent_Patronymic(int student_id, String patronymic) throws Exception;
 }

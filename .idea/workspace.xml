@@ -2,10 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0bb64434-99e9-410e-86c7-e41418c63100" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Services/UserService_Interface.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/mainrep.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Services/AnswerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Services/GroupService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Services/MarkService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Services/TestService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Servlets/RegistrationServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/AnswersDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/AnswersDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/GroupsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/GroupsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/MarksDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/MarksDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/QuestionsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/QuestionsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/StudentsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/StudentsDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/TeachersDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/TeachersDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DAO/TestsDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DAO/TestsDAO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DataSets/AnswersDataSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataSets/AnswersDataSet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DataSets/GroupsDataSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataSets/GroupsDataSet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DataSets/MarksDataSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataSets/MarksDataSet.java" afterDir="false" />
@@ -13,8 +25,15 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/DataSets/StudentsDataSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataSets/StudentsDataSet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DataSets/TeachersDataSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataSets/TeachersDataSet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/DataSets/TestsDataSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataSets/TestsDataSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Services/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Services/StudentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Services/TeacherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Services/TeacherService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Services/UserService_Interface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Services/UserService_Interface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Servlets/TestServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Servlets/TestServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DataSets/AnswersDataSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DataSets/AnswersDataSet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/DataSets/TestsDataSet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/DataSets/TestsDataSet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Main/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/Servlets/TestServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Servlets/TestServlet.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,8 +47,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -53,11 +72,11 @@
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../server" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="file.status.colors" />
+    <property name="settings.editor.selected.configurable" value="settings.github" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -74,7 +93,7 @@
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main.Main" />
-      <module name="mainrep2.0" />
+      <module name="testbuilder" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="Main.*" />
@@ -175,9 +194,5 @@
     <MESSAGE value="Тестовое подключение к локалхосту" />
     <MESSAGE value="Добавлен сервис к &quot;студенту&quot;" />
     <option name="LAST_COMMIT_MESSAGE" value="Добавлен сервис к &quot;студенту&quot;" />
-  </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
   </component>
 </project>

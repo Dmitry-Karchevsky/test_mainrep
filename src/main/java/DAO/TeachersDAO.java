@@ -6,10 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class TeachersDAO {
@@ -41,6 +38,40 @@ public class TeachersDAO {
         return teacher;
     }
 
+    public List<TeachersDataSet> getTeachersBySurname (String surname) throws HibernateException {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<TeachersDataSet> cq = cb.createQuery(TeachersDataSet.class);
+        Root<TeachersDataSet> root = cq.from(TeachersDataSet.class);
+        cq.select(root);
+        cq.where(cb.equal(root.get("surname"), surname));
+        List<TeachersDataSet> teachers;
+        Query<TeachersDataSet> query = session.createQuery(cq);
+        try{
+            teachers = query.getResultList();
+        }catch (NoResultException ex){
+            System.out.println("Преподавателей с такой фамилией не найдено");
+            return null;
+        }
+        return teachers;
+    }
+
+    public List<TeachersDataSet> getTeachersByOrganization (String organization) throws HibernateException {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<TeachersDataSet> cq = cb.createQuery(TeachersDataSet.class);
+        Root<TeachersDataSet> root = cq.from(TeachersDataSet.class);
+        cq.select(root);
+        cq.where(cb.equal(root.get("organization"), organization));
+        List<TeachersDataSet> teachers;
+        Query<TeachersDataSet> query = session.createQuery(cq);
+        try{
+            teachers = query.getResultList();
+        }catch (NoResultException ex){
+            System.out.println("Преподавателей с такой организации не найдено");
+            return null;
+        }
+        return teachers;
+    }
+
     public List<TeachersDataSet> getTeachersByFIO(String name, String surname, String patronymic) throws HibernateException {
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery<TeachersDataSet> cq = cb.createQuery(TeachersDataSet.class);
@@ -61,7 +92,25 @@ public class TeachersDAO {
         return teachers;
     }
 
-    public long insertTeacher(String name, String surname, String email, String password, String regDate) throws HibernateException {
-        return (Long) session.save(new TeachersDataSet(name, surname, email, password, regDate));
+    public void setTeacher_Organization(int teacher_id, String organization) throws HibernateException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaUpdate<TeachersDataSet> criteria = builder.createCriteriaUpdate(TeachersDataSet.class);
+        Root<TeachersDataSet> root = criteria.from(TeachersDataSet.class);
+        criteria.where(builder.equal(root.get("id"), teacher_id));
+        criteria.set(root.get("organization"), organization);
+        session.createQuery(criteria).executeUpdate();
+    }
+
+    public void setTeacher_Patronymic(int teacher_id, String patronymic) throws HibernateException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaUpdate<TeachersDataSet> criteria = builder.createCriteriaUpdate(TeachersDataSet.class);
+        Root<TeachersDataSet> root = criteria.from(TeachersDataSet.class);
+        criteria.where(builder.equal(root.get("id"), teacher_id));
+        criteria.set(root.get("patronymic"), patronymic);
+        session.createQuery(criteria).executeUpdate();
+    }
+
+    public void insertTeacher(String name, String surname, String email, String password, String regDate) throws HibernateException {
+        session.save(new TeachersDataSet(name, surname, email, password, regDate));
     }
 }

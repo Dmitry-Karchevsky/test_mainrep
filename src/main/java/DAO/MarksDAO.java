@@ -61,7 +61,7 @@ public class MarksDAO {
         return mark;
     }
 
-    public long insertMark(int mark) throws HibernateException {
-        return (Long) session.save(new MarksDataSet(mark));
+    public void insertMark(String mark) throws HibernateException {
+        session.save(new MarksDataSet(mark));
     }
 }

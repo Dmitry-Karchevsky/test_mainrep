@@ -2,9 +2,11 @@ package DataSets;
 
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "mark")
+@Table(name = "Marks")
 public class MarksDataSet {
 
     @Id
@@ -14,27 +16,30 @@ public class MarksDataSet {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "test_id")
-    private int test_id;
+    private TestsDataSet test_id;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "mark_student", joinColumns = @JoinColumn(name = "mark_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private int student_id;
+    private Set<StudentsDataSet> student_id = new HashSet<>();
 
     @Column(name = "mark")
-    private int mark;
+    private String mark;
 
     public MarksDataSet(){}
 
-    public MarksDataSet(int mark){
+    public MarksDataSet(String mark){
         this.mark = mark;
     }
 
-    public int getMark() {
+    public String getMark() {
         return mark;
     }
 
-    public void setMark(int mark) {
+    public void setMark(String mark) {
         this.mark = mark;
     }
 
@@ -46,19 +51,19 @@ public class MarksDataSet {
         this.id = id;
     }
 
-    public int getTest_id() {
+    public TestsDataSet getTest_id() {
         return test_id;
     }
 
-    public void setTest_id(int test_id) {
+    public void setTest_id(TestsDataSet test_id) {
         this.test_id = test_id;
     }
 
-    public int getStudent_id() {
+    public Set<StudentsDataSet> getStudent_id() {
         return student_id;
     }
 
-    public void setStudent_id(int student_id) {
+    public void setStudent_id(Set<StudentsDataSet> student_id) {
         this.student_id = student_id;
     }
 }

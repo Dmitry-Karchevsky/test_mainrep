@@ -1,10 +1,11 @@
 package DataSets;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "teacher")
+@Table(name = "Teacher")
 
 public class TeachersDataSet {
 
@@ -32,7 +33,7 @@ public class TeachersDataSet {
     private String regDate;
 
     @OneToMany(mappedBy = "teacher_id", cascade = CascadeType.ALL, orphanRemoval = true)
-    private int groups_id;
+    private Set<GroupsDataSet> groups;
 
     @Column(name = "organization", length = 50)
     private String organization;
@@ -48,6 +49,7 @@ public class TeachersDataSet {
         this.password = password;
         this.regDate = regDate;
         this.organization = organization;
+        groups = new HashSet<>();
     }
 
     public TeachersDataSet(String name, String surname, String email, String password, String regDate) {
@@ -56,6 +58,7 @@ public class TeachersDataSet {
         this.email = email;
         this.password = password;
         this.regDate = regDate;
+        groups = new HashSet<>();
     }
 
     public int getId() {
@@ -114,6 +117,14 @@ public class TeachersDataSet {
         this.regDate = regDate;
     }
 
+    public Set<GroupsDataSet> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<GroupsDataSet> groups) {
+        this.groups = groups;
+    }
+
     public String getOrganization() {
         return organization;
     }
@@ -130,11 +141,11 @@ public class TeachersDataSet {
                 '}';
     }
 
-    public int getGroups_id() {
+    /*public int getGroups_id() {
         return groups_id;
     }
 
     public void setGroups_id(int groups_id) {
         this.groups_id = groups_id;
-    }
+    }*/
 }

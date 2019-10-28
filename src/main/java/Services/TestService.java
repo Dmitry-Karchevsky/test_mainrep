@@ -1,6 +1,6 @@
 package Services;
 
-import DAO.TeachersDAO;
+import DAO.TestsDAO;
 import DataSets.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -12,34 +12,33 @@ import org.hibernate.service.ServiceRegistry;
 
 import java.util.List;
 
-public class TeacherService implements UserService_Interface{
+public class TestService {
 
     private final SessionFactory sessionFactory;
     private static final String hibernate_show_sql = "true";
     private static final String hibernate_hbm2ddl_auto = "update";
 
-    public TeacherService() {
+    public TestService(){
         Configuration configuration = getPostgreConfiguration();
         sessionFactory = createSessionFactory(configuration);
     }
 
     public Configuration getPostgreConfiguration() {
         Configuration configuration = new Configuration();
-        configuration.addAnnotatedClass(AnswersDataSet.class);
-        configuration.addAnnotatedClass(GroupsDataSet.class);
-        configuration.addAnnotatedClass(MarksDataSet.class);
-        configuration.addAnnotatedClass(QuestionsDataSet.class);
-        configuration.addAnnotatedClass(StudentsDataSet.class);
-        configuration.addAnnotatedClass(TeachersDataSet.class);
-        configuration.addAnnotatedClass(TestsDataSet.class);
+        configuration.addAnnotatedClass(AnswersDataSet.class)
+                .addAnnotatedClass(GroupsDataSet.class)
+                .addAnnotatedClass(MarksDataSet.class)
+                .addAnnotatedClass(QuestionsDataSet.class)
+                .addAnnotatedClass(StudentsDataSet.class)
+                .addAnnotatedClass(TeachersDataSet.class)
+                .addAnnotatedClass(TestsDataSet.class);
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL94Dialect");
         configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:postgresql:./postgresqldb");
-        configuration.setProperty("hibernate.connection.username", "test");
-        configuration.setProperty("hibernate.connection.password", "test");
+        configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/postgres");
+        configuration.setProperty("hibernate.connection.username", "postgres");
+        configuration.setProperty("hibernate.connection.password", "kainen");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);
         configuration.setProperty("hibernate.hbm2ddl.auto", hibernate_hbm2ddl_auto);
-
         return configuration;
     }
 
@@ -50,12 +49,12 @@ public class TeacherService implements UserService_Interface{
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
-    public void addUser(String name, String surname, String email, String password, String regDate) throws Exception {
+    public void addTest(String name, String creation_time, boolean test_type) throws Exception {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            TeachersDAO dao = new TeachersDAO(session);
-            dao.insertTeacher(name, surname, email, password, regDate);
+            TestsDAO dao = new TestsDAO(session);
+            dao.insertTest(name, creation_time, test_type);
             transaction.commit();
             session.close();
         } catch (HibernateException e) {
@@ -63,72 +62,48 @@ public class TeacherService implements UserService_Interface{
         }
     }
 
-    public TeachersDataSet getCurUserByLogin(String login) throws Exception{
+    public List<TestsDataSet> getTestsByTeacher(int teacher_id) throws Exception{
         try {
             Session session = sessionFactory.openSession();
-            TeachersDAO dao = new TeachersDAO(session);
-            TeachersDataSet teacher = dao.getTeacherByLogin(login);
+            TestsDAO dao = new TestsDAO(session);
+            List<TestsDataSet> tests = dao.getTestByTeacher(teacher_id);
             session.close();
-            return teacher;
+            return tests;
         } catch (HibernateException e) {
             throw new Exception(e);
         }
     }
 
-    public TeachersDataSet getCurUserById(int id) throws Exception{
+    public List<TestsDataSet> getTestsByName (String name) throws Exception{
         try {
             Session session = sessionFactory.openSession();
-            TeachersDAO dao = new TeachersDAO(session);
-            TeachersDataSet teachers = dao.get(id);
+            TestsDAO dao = new TestsDAO(session);
+            List<TestsDataSet> tests = dao.getTestsByName(name);
             session.close();
-            return teachers;
+            return tests;
         } catch (HibernateException e) {
             throw new Exception(e);
         }
     }
 
-    public List<TeachersDataSet> getCurUserBySurname(String surname) throws Exception{
+    public TestsDataSet getTestById(int id) throws Exception{
         try {
             Session session = sessionFactory.openSession();
-            TeachersDAO dao = new TeachersDAO(session);
-            List<TeachersDataSet> teachers = dao.getTeachersBySurname(surname);
+            TestsDAO dao = new TestsDAO(session);
+            TestsDataSet test = dao.get(id);
             session.close();
-            return teachers;
+            return test;
         } catch (HibernateException e) {
             throw new Exception(e);
         }
     }
 
-    public List<TeachersDataSet> getCurUserByOrganization(String surname) throws Exception{
-        try {
-            Session session = sessionFactory.openSession();
-            TeachersDAO dao = new TeachersDAO(session);
-            List<TeachersDataSet> teachers = dao.getTeachersByOrganization(surname);
-            session.close();
-            return teachers;
-        } catch (HibernateException e) {
-            throw new Exception(e);
-        }
-    }
-
-    public List<TeachersDataSet> getCurUserByFIO(String name, String surname, String patronymic) throws Exception{
-        try {
-            Session session = sessionFactory.openSession();
-            TeachersDAO dao = new TeachersDAO(session);
-            List<TeachersDataSet> teacher = dao.getTeachersByFIO(name, surname, patronymic);
-            session.close();
-            return teacher;
-        } catch (HibernateException e) {
-            throw new Exception(e);
-        }
-    }
-
-    public void setStudent_Organization(int teacher_id, String organization) throws Exception{
+    public void setAbout_Test(int test_id, String about_test) throws Exception{
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            TeachersDAO dao = new TeachersDAO(session);
-            dao.setTeacher_Organization(teacher_id, organization);
+            TestsDAO dao = new TestsDAO(session);
+            dao.setAbout_Test(test_id, about_test);
             transaction.commit();
             session.close();
         } catch (HibernateException e) {
@@ -136,12 +111,25 @@ public class TeacherService implements UserService_Interface{
         }
     }
 
-    public void setStudent_Patronymic(int teacher_id, String patronymic) throws Exception{
+    public void setTests_Attempts(int test_id, int attempts) throws Exception{
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            TeachersDAO dao = new TeachersDAO(session);
-            dao.setTeacher_Patronymic(teacher_id, patronymic);
+            TestsDAO dao = new TestsDAO(session);
+            dao.setTests_Attempts(test_id, attempts);
+            transaction.commit();
+            session.close();
+        } catch (HibernateException e) {
+            throw new Exception(e);
+        }
+    }
+
+    public void setSolution_Time(int test_id, int solution_time) throws Exception{
+        try {
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            TestsDAO dao = new TestsDAO(session);
+            dao.setSolution_Time(test_id, solution_time);
             transaction.commit();
             session.close();
         } catch (HibernateException e) {

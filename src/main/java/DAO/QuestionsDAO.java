@@ -60,7 +60,7 @@ public class QuestionsDAO {
         return questions;
     }
 
-    public long insertQuestion(String question, String type) throws HibernateException {
-        return (Long) session.save(new QuestionsDataSet(question, type));
+    public void insertQuestion(String question, String type) throws HibernateException {
+        session.save(new QuestionsDataSet(question, type));
     }
 }

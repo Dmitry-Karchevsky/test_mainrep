@@ -6,10 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class AnswersDAO {
@@ -62,7 +59,16 @@ public class AnswersDAO {
         return answers;
     }
 
-    public long insertAnswer(String answer_text, boolean right) throws HibernateException {
-        return (Long) session.save(new AnswersDataSet(answer_text, right));
+    public void setTeacherComment(String comment, int answer_id) throws HibernateException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaUpdate<AnswersDataSet> criteria = builder.createCriteriaUpdate(AnswersDataSet.class);
+        Root<AnswersDataSet> root = criteria.from(AnswersDataSet.class);
+        criteria.set(root.get("teacher_comment"), comment);
+        criteria.where(builder.equal(root.get("id"), answer_id));
+        session.createQuery(criteria).executeUpdate();
+    }
+
+    public void insertAnswer(String answer_text, boolean right) throws HibernateException {
+        session.save(new AnswersDataSet(answer_text, right));
     }
 }

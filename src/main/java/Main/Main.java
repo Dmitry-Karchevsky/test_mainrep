@@ -1,7 +1,10 @@
 package Main;
 
 import java.io.File;
+import java.util.Scanner;
 
+import DataSets.StudentsDataSet;
+import Services.StudentService;
 import org.apache.catalina.WebResourceRoot;
 import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
@@ -30,10 +33,17 @@ public class Main {
         resources.addPreResources(new DirResourceSet(resources, "/WEB-INF/classes",
                 additionWebInfClasses.getAbsolutePath(), "/"));
         ctx.setResources(resources);
-
+        /*Scanner scan = new Scanner(System.in);
+        String word = scan.nextLine();
+        scan.close();
+        if(word.equals("start")){
+            System.out.println("werwrwer");
+            StudentService service = new StudentService();
+            StudentsDataSet student = service.getCurUserByLogin("ymnyaga@yandex.ru");
+            System.out.println(student.getEmail());
+        }*/
         tomcat.start();
         System.out.println("Server started");
         tomcat.getServer().await();
     }
-
 }

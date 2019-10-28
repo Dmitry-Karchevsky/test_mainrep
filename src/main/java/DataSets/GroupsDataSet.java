@@ -1,10 +1,11 @@
 package DataSets;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "group")
+@Table(name = "Groups")
 public class GroupsDataSet {
 
     @Id
@@ -15,19 +16,25 @@ public class GroupsDataSet {
     @Column(name = "name", nullable = false, length = 35)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "student_group", joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private int student_id;
+    private Set<StudentsDataSet> student_id = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "test_group", joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "test_id"))
-    private int test_id;
+    private Set<TestsDataSet> test_id = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
-    private int teacher_id;
+    private TeachersDataSet teacher_id;
 
     public GroupsDataSet() {
     }
@@ -52,27 +59,27 @@ public class GroupsDataSet {
         this.name = name;
     }
 
-    public int getStudent_id() {
-        return student_id;
-    }
-
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
-    }
-
-    public int getTest_id() {
-        return test_id;
-    }
-
-    public void setTest_id(int test_id) {
-        this.test_id = test_id;
-    }
-
-    public int getTeacher_id() {
+    public TeachersDataSet getTeacher_id() {
         return teacher_id;
     }
 
-    public void setTeacher_id(int teacher_id) {
+    public void setTeacher_id(TeachersDataSet teacher_id) {
         this.teacher_id = teacher_id;
+    }
+
+    public Set<StudentsDataSet> getStudent_id() {
+        return student_id;
+    }
+
+    public void setStudent_id(Set<StudentsDataSet> student_id) {
+        this.student_id = student_id;
+    }
+
+    public Set<TestsDataSet> getTest_id() {
+        return test_id;
+    }
+
+    public void setTest_id(Set<TestsDataSet> test_id) {
+        this.test_id = test_id;
     }
 }

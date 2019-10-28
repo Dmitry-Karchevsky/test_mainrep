@@ -2,9 +2,10 @@ package DataSets;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "questions")
+@Table(name = "Questions")
 public class QuestionsDataSet {
 
     @Id
@@ -23,10 +24,10 @@ public class QuestionsDataSet {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "test_id")
-    private int test_id;
+    private TestsDataSet test_id;
 
-    @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL, orphanRemoval = true)
-    private int answers_id;
+    @OneToMany(mappedBy = "question_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<AnswersDataSet> answers_id;
 
     public QuestionsDataSet(){}
 
@@ -73,19 +74,19 @@ public class QuestionsDataSet {
         this.smth_object = smth_object;
     }
 
-    public int getTest_id() {
+    public TestsDataSet getTest_id() {
         return test_id;
     }
 
-    public void setTest_id(int test_id) {
+    public void setTest_id(TestsDataSet test_id) {
         this.test_id = test_id;
     }
 
-    public int getAnswers_id() {
+    public Set<AnswersDataSet> getAnswers_id() {
         return answers_id;
     }
 
-    public void setAnswers_id(int answers_id) {
+    public void setAnswers_id(Set<AnswersDataSet> answers_id) {
         this.answers_id = answers_id;
     }
 }

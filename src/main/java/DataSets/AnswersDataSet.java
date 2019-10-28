@@ -3,7 +3,7 @@ package DataSets;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "answers")
+@Table(name = "Answers")
 public class AnswersDataSet {
 
     @Id
@@ -17,19 +17,20 @@ public class AnswersDataSet {
     @Column(name = "teacher_comment", length = 255)
     private String teacher_comment;
 
-    @Column(name = "right", nullable = false)
-    private boolean right;
+    @Column(name = "isRight", nullable = false)
+    private boolean isRight;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "test_id")
-    private int test_id;
+    private TestsDataSet test_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
-    private int question_id;
+    private QuestionsDataSet question_id;
 
-    @OneToOne(mappedBy = "answers")
-    private int student_id;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="student_id")
+    private StudentsDataSet student_id;
 
     public AnswersDataSet() {
     }
@@ -37,12 +38,12 @@ public class AnswersDataSet {
     public AnswersDataSet(String answer_text, String teacher_comment, boolean right) {
         this.answer_text = answer_text;
         this.teacher_comment = teacher_comment;
-        this.right = right;
+        this.isRight = right;
     }
 
     public AnswersDataSet(String answer_text, boolean right) {
         this.answer_text = answer_text;
-        this.right = right;
+        this.isRight = right;
     }
 
     public int getId() {
@@ -70,34 +71,34 @@ public class AnswersDataSet {
     }
 
     public boolean isRight() {
-        return right;
+        return isRight;
     }
 
     public void setRight(boolean right) {
-        this.right = right;
+        this.isRight = right;
     }
 
-    public int getTest_id() {
+    public TestsDataSet getTest_id() {
         return test_id;
     }
 
-    public void setTest_id(int test_id) {
+    public void setTest_id(TestsDataSet test_id) {
         this.test_id = test_id;
     }
 
-    public int getQuestion_id() {
+    public QuestionsDataSet getQuestion_id() {
         return question_id;
     }
 
-    public void setQuestion_id(int question_id) {
+    public void setQuestion_id(QuestionsDataSet question_id) {
         this.question_id = question_id;
     }
 
-    public int getStudent_id() {
+    public StudentsDataSet getStudent_id() {
         return student_id;
     }
 
-    public void setStudent_id(int student_id) {
+    public void setStudent_id(StudentsDataSet student_id) {
         this.student_id = student_id;
     }
 }

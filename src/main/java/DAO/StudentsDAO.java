@@ -6,10 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 
@@ -33,12 +30,46 @@ public class StudentsDAO {
         StudentsDataSet student;
         Query<StudentsDataSet> query = session.createQuery(cq);
         try{
-            student = query.getSingleResult();
+            student = (StudentsDataSet) query.getSingleResult();
         }catch (NoResultException ex){
             System.out.println("Студента с таким логином не найдено");
             return null;
         }
         return student;
+    }
+
+    public List<StudentsDataSet> getStudentsBySurname (String surname) throws HibernateException {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<StudentsDataSet> cq = cb.createQuery(StudentsDataSet.class);
+        Root<StudentsDataSet> root = cq.from(StudentsDataSet.class);
+        cq.select(root);
+        cq.where(cb.equal(root.get("surname"), surname));
+        List<StudentsDataSet> students;
+        Query<StudentsDataSet> query = session.createQuery(cq);
+        try{
+            students = query.getResultList();
+        }catch (NoResultException ex){
+            System.out.println("Студентов с такой фамилией не найдено");
+            return null;
+        }
+        return students;
+    }
+
+    public List<StudentsDataSet> getStudentsByOrganization (String organization) throws HibernateException {
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<StudentsDataSet> cq = cb.createQuery(StudentsDataSet.class);
+        Root<StudentsDataSet> root = cq.from(StudentsDataSet.class);
+        cq.select(root);
+        cq.where(cb.equal(root.get("organization"), organization));
+        List<StudentsDataSet> students;
+        Query<StudentsDataSet> query = session.createQuery(cq);
+        try{
+            students = query.getResultList();
+        }catch (NoResultException ex){
+            System.out.println("Студентов с такой организации не найдено");
+            return null;
+        }
+        return students;
     }
 
     public List<StudentsDataSet> getStudentsByFIO(String name, String surname, String patronymic) throws HibernateException {
@@ -61,8 +92,26 @@ public class StudentsDAO {
         return students;
     }
 
-    public long insertStudent(String name, String surname, String email, String password, String regDate) throws HibernateException {
-        return (Long) session.save(new StudentsDataSet(name, surname, email, password, regDate));
+    public void setStudent_Organization(int student_id, String organization) throws HibernateException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaUpdate<StudentsDataSet> criteria = builder.createCriteriaUpdate(StudentsDataSet.class);
+        Root<StudentsDataSet> root = criteria.from(StudentsDataSet.class);
+        criteria.where(builder.equal(root.get("id"), student_id));
+        criteria.set(root.get("organization"), organization);
+        session.createQuery(criteria).executeUpdate();
+    }
+
+    public void setStudent_Patronymic(int student_id, String patronymic) throws HibernateException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaUpdate<StudentsDataSet> criteria = builder.createCriteriaUpdate(StudentsDataSet.class);
+        Root<StudentsDataSet> root = criteria.from(StudentsDataSet.class);
+        criteria.where(builder.equal(root.get("id"), student_id));
+        criteria.set(root.get("patronymic"), patronymic);
+        session.createQuery(criteria).executeUpdate();
+    }
+
+    public void insertStudent(String name, String surname, String email, String password, String regDate) throws HibernateException {
+         session.save(new StudentsDataSet(name, surname, email, password, regDate));
     }
 
 }

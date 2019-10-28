@@ -58,7 +58,7 @@ public class GroupsDAO {
         return groups;
     }
 
-    public long insertGroup(String name) throws HibernateException {
-        return (Long) session.save(new GroupsDataSet(name));
+    public void insertGroup(String name) throws HibernateException {
+        session.save(new GroupsDataSet(name));
     }
 }
